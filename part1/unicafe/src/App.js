@@ -7,9 +7,14 @@ const Statistic = ({ text, value }) => {
     sign = '%';
   }
   return (
-    <div>
-      {text} {value} {sign}
-    </div>
+    <tbody>
+      <tr>
+        <td>{text}</td>
+        <td>
+          {value} {sign}
+        </td>
+      </tr>
+    </tbody>
   );
 };
 
@@ -18,7 +23,7 @@ const Statistics = ({ good, bad, neutral }) => {
     return <div>No feedback given</div>;
   }
   return (
-    <div>
+    <table>
       <Statistic text="good" value={good} />
       <Statistic text="neutral" value={neutral} />
       <Statistic text="bad" value={bad} />
@@ -31,7 +36,7 @@ const Statistics = ({ good, bad, neutral }) => {
         text="positive"
         value={(good / (good + neutral + bad)) * 100}
       />
-    </div>
+    </table>
   );
 };
 
