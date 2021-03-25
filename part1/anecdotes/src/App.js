@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MostVoted from './MostVoted';
 
 const App = () => {
   const anecdotes = [
@@ -20,23 +21,24 @@ const App = () => {
     setSelected(nb);
   };
 
-  const votesResult = (copy) => {
-    const max = Math.max(copy);
-    let result = 0;
-
-    console.log(copy);
-    copy.forEach((el, index) => {
-      if (el === max) result = index;
-    });
-    if (mostVoted !== result) setMostVoted(result);
-  };
-
   const addVote = () => {
     const copy = [...votes];
     copy[selected] += 1;
-    votesResult(copy);
     setVotes(copy);
   };
+
+  let max = 0;
+  votes.forEach((vote) => {
+    if (vote > max) max = vote;
+  });
+
+  let pos = 0;
+  for (; pos < votes.length; pos++) {
+    if (votes[pos] === max) {
+      break;
+    }
+  }
+  if (mostVoted !== pos) setMostVoted(pos);
 
   return (
     <div>
@@ -47,8 +49,7 @@ const App = () => {
         <button onClick={() => addVote()}>vote</button>
         <button onClick={() => selection()}>next anecdote</button>
       </div>
-      <h1>Anecdote with the most votes</h1>
-      {anecdotes[mostVoted]}
+      <MostVoted anecdotes={anecdotes} votes={votes} mostVoted={mostVoted} />
     </div>
   );
 };
