@@ -1,7 +1,5 @@
 import React from 'react';
-import Header from './Header';
-import Content from './Content';
-import Total from './Total';
+import Course from './components/Course';
 
 const App = () => {
   const course = {
@@ -22,15 +20,18 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   };
 
   return (
     <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <Course course={course} />
     </div>
   );
 };
