@@ -1,15 +1,10 @@
 const Total = ({ parts }) => {
-  let total = 0;
+  let initialValue = 0;
+  const total = parts.reduce((s, p) => s + p.exercises, initialValue);
 
   return (
     <div>
-      <strong>
-        Number of exercises{' '}
-        {parts.forEach((part) => {
-          total += part.exercises;
-        })}
-        {total}
-      </strong>
+      <strong>total of {total} exercises</strong>
     </div>
   );
 };
