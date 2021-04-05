@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Filter from './components/Filter';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -55,16 +56,14 @@ const App = () => {
       result = persons.filter((person) =>
         person.name.toLowerCase().includes(event.target.value.toLowerCase())
       );
+      setNumbersList(result);
     }
-    setNumbersList(result);
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with <input value={search} onChange={handleSearch} />
-      </div>
+      <Filter search={search} handleSearch={handleSearch} />
       <h2>Add a new</h2>
       <form>
         <div>
