@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -11,7 +12,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNum, setNewNum] = useState('');
   const [search, setSearch] = useState('');
-  const [numbersList, setNumbersList] = useState(persons);
+  const [showAll, setShowAll] = useState(true);
 
   const isDuplicateName = (persons) => {
     let result = false;
@@ -49,35 +50,30 @@ const App = () => {
   };
 
   const handleSearch = (event) => {
-    let result = persons;
-
     setSearch(event.target.value);
-    if (event.target.value) {
-      result = persons.filter((person) =>
-        person.name.toLowerCase().includes(event.target.value.toLowerCase())
-      );
-      setNumbersList(result);
-    }
+    setShowAll(false);
   };
+
+  const numbersList = showAll
+    ? persons
+    : persons.filter((person) =>
+        person.name.toLowerCase().includes(search.toLowerCase())
+      );
 
   return (
     <div>
       <h2>Phonebook</h2>
       <Filter search={search} handleSearch={handleSearch} />
       <h2>Add a new</h2>
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNum} onChange={handleNumChange} />
-        </div>
-        <div>
-          <button type="submit" onClick={addPerson}>
-            add
-          </button>
-        </div>
-      </form>
+      <PersonForm
+        props={{
+          newName,
+          handleNameChange,
+          newNum,
+          handleNumChange,
+          addPerson
+        }}
+      />
       <h2>Numbers</h2>
       {numbersList.map((person) => (
         <div key={person.number}>
