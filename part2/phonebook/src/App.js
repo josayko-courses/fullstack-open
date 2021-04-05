@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-  const [newName, setNewName] = useState('Enter a new name...');
+  const [newName, setNewName] = useState('');
+  const [newNum, setNewNum] = useState('');
 
   const isDuplicateName = (persons) => {
     let result = false;
 
     persons.forEach((person) => {
-      if (person.name === newName) {
+      if (person.name.toLowerCase() === newName.toLowerCase()) {
         return (result = true);
       }
     });
@@ -17,20 +18,26 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    if (!isDuplicateName(persons)) {
+    if (newName && isDuplicateName(persons)) {
+      alert(`${newName} is already added to phonebook`);
+    } else if (newName && newNum) {
       const personObject = {
         id: newName,
-        name: newName
+        name: newName,
+        number: newNum
       };
       setPersons(persons.concat(personObject));
       setNewName('');
-    } else {
-      alert(`${newName} is already added to phonebook`);
+      setNewNum('');
     }
   };
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
+  };
+
+  const handleNumChange = (event) => {
+    setNewNum(event.target.value);
   };
 
   return (
@@ -41,6 +48,9 @@ const App = () => {
           name: <input value={newName} onChange={handleNameChange} />
         </div>
         <div>
+          number: <input value={newNum} onChange={handleNumChange} />
+        </div>
+        <div>
           <button type="submit" onClick={addPerson}>
             add
           </button>
@@ -48,9 +58,10 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {persons.map((person) => (
-        <div key={person.id}>{person.name}</div>
+        <div key={person.id}>
+          {person.name} {person.number}
+        </div>
       ))}
-      <div>debug: {newName}</div>
     </div>
   );
 };
