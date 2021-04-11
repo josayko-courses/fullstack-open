@@ -12,7 +12,7 @@ const CountryInfo = ({ country }) => {
         })}
       </ul>
       <img
-        style={{ height: '100px', width: '100px' }}
+        style={{ height: '100px', width: '150' }}
         src={country.flag}
         alt={country.demonym + ' flag'}
       />
