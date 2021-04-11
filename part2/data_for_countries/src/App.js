@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const App = () => {
   const [countries, setCountries] = useState([]);
-  const [name, setName] = useState('');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     axios
@@ -11,11 +11,25 @@ const App = () => {
       .then((res) => setCountries(res.data));
   }, []);
 
-  console.log(countries);
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const filteredArray = search
+    ? countries.filter((country) => {
+        return country.name.toLowerCase().includes(search.toLowerCase());
+      })
+    : [];
+
   return (
     <div className="App">
-      find countries <input type="text" />
-      <div></div>
+      find countries{' '}
+      <input type="text" value={search} onChange={handleSearch} />
+      <div>
+        {filteredArray.map((country) => {
+          return <div key={country.numericCode}>{country.name}</div>;
+        })}
+      </div>
     </div>
   );
 };
