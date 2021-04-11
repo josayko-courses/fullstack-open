@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Content from './components/Content';
+import Search from './components/Search';
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -23,13 +25,8 @@ const App = () => {
 
   return (
     <div className="App">
-      find countries{' '}
-      <input type="text" value={search} onChange={handleSearch} />
-      <div>
-        {filteredArray.map((country) => {
-          return <div key={country.numericCode}>{country.name}</div>;
-        })}
-      </div>
+      <Search search={search} handleSearch={handleSearch} />
+      <Content filteredArray={filteredArray} />
     </div>
   );
 };
