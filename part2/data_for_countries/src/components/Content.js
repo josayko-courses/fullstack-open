@@ -4,6 +4,7 @@ const Content = ({ filteredArray, setSearch }) => {
   const handleClick = (name) => {
     setSearch(name);
   };
+
   if (filteredArray.length > 10) {
     return <div>Too many matches, specify another filter</div>;
   } else if (filteredArray.length === 1) {
