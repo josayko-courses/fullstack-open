@@ -3,7 +3,12 @@ import { useEffect, useState } from 'react';
 
 const CountryInfo = ({ country }) => {
   const api_key = process.env.REACT_APP_API_KEY;
-  const [weather, setWeather] = useState({});
+  const [weather, setWeather] = useState({
+    temperature: 0,
+    weather_icons: [],
+    wind_speed: 0,
+    wind_dir: ''
+  });
 
   useEffect(() => {
     axios
@@ -13,7 +18,11 @@ const CountryInfo = ({ country }) => {
           '&query=' +
           country.capital
       )
-      .then((res) => setWeather(res.data.current));
+      .then((res) => {
+        if (res.data.current) {
+          setWeather(res.data.current);
+        }
+      });
   }, [api_key, country]);
 
   return (
