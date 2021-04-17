@@ -26,7 +26,7 @@ const App = () => {
   return (
     <div className="App">
       <Search search={search} handleSearch={handleSearch} />
-      <Content filteredArray={filteredArray} />
+      <Content filteredArray={filteredArray} setSearch={setSearch} />
     </div>
   );
 };

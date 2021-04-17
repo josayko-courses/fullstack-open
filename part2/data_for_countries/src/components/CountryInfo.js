@@ -1,5 +1,4 @@
 const CountryInfo = ({ country }) => {
-  console.log(country);
   return (
     <>
       <h2>{country.name}</h2>
