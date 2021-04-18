@@ -44,6 +44,10 @@ const App = () => {
         )
       ) {
         personService.update(newName.toLowerCase(), personObject);
+        setNotification(`Updated ${newName}'s number`);
+        setTimeout(() => {
+          setNotification(null);
+        }, 3000);
       }
     } else if (newName && newNum) {
       personService.create(personObject).then((returnedPerson) => {
