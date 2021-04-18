@@ -33,7 +33,7 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNum,
-      id: newName
+      id: newName.toLowerCase()
     };
     if (newName && newNum && isDuplicateName(persons)) {
       if (
@@ -41,15 +41,7 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one ?`
         )
       ) {
-        console.log('updated');
-        let idToUpdate = 0;
-        for (const person of persons) {
-          if (person.name === newName) {
-            idToUpdate = person.id;
-            personObject.id = idToUpdate;
-          }
-        }
-        personService.update(idToUpdate, personObject);
+        personService.update(newName.toLowerCase(), personObject);
       }
     } else if (newName && newNum) {
       personService.create(personObject).then((returnedPerson) => {
