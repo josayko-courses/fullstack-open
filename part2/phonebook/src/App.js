@@ -30,14 +30,28 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    if (newName && isDuplicateName(persons)) {
-      alert(`${newName} is already added to phonebook`);
+    const personObject = {
+      name: newName,
+      number: newNum,
+      id: newName
+    };
+    if (newName && newNum && isDuplicateName(persons)) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one ?`
+        )
+      ) {
+        console.log('updated');
+        let idToUpdate = 0;
+        for (const person of persons) {
+          if (person.name === newName) {
+            idToUpdate = person.id;
+            personObject.id = idToUpdate;
+          }
+        }
+        personService.update(idToUpdate, personObject);
+      }
     } else if (newName && newNum) {
-      const personObject = {
-        name: newName,
-        number: newNum,
-        id: persons.length + 1
-      };
       personService.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
         setNewName('');
