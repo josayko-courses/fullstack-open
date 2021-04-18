@@ -15,7 +15,7 @@ const App = () => {
     personService.getAll().then((initialList) => {
       setPersons(initialList);
     });
-  }, []);
+  }, [persons]);
 
   const isDuplicateName = (persons) => {
     let result = false;
@@ -34,9 +34,9 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
     } else if (newName && newNum) {
       const personObject = {
-        id: newName,
         name: newName,
-        number: newNum
+        number: newNum,
+        id: persons.length + 1
       };
       personService.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
@@ -57,6 +57,12 @@ const App = () => {
   const handleSearch = (event) => {
     setSearch(event.target.value);
     setShowAll(false);
+  };
+
+  const deletePerson = (id, name) => {
+    if (window.confirm(`Do you really want to delete ${name}?`)) {
+      personService.deleteId(id);
+    }
   };
 
   const numbersList = showAll
@@ -80,7 +86,7 @@ const App = () => {
         }}
       />
       <h3>Numbers</h3>
-      <Persons numbersList={numbersList} />
+      <Persons numbersList={numbersList} deletePerson={deletePerson} />
     </div>
   );
 };

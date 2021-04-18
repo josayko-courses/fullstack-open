@@ -11,11 +11,16 @@ const create = async (newObject) => {
   return request.then((response) => response.data);
 };
 
+const deleteId = async (id) => {
+  const request = axios.delete(`${baseUrl}/${id}`);
+  return request;
+};
+
 const update = async (id, newObject) => {
   const request = axios.put(`${baseUrl}/${id}`, newObject);
   return request.then((response) => response.data);
 };
 
-const personService = { getAll, create, update };
+const personService = { getAll, create, update, deleteId };
 
 export default personService;
