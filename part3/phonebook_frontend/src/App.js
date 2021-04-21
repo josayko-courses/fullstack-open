@@ -62,6 +62,13 @@ const App = () => {
     }
   };
 
+  const deletePerson = (id, name) => {
+    if (window.confirm(`Do you really want to delete ${name}?`)) {
+      personService.deleteId(id);
+      setPersons(persons.filter((person) => person.id !== id));
+    }
+  };
+
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -73,12 +80,6 @@ const App = () => {
   const handleSearch = (event) => {
     setSearch(event.target.value);
     setShowAll(false);
-  };
-
-  const deletePerson = (id, name) => {
-    if (window.confirm(`Do you really want to delete ${name}?`)) {
-      personService.deleteId(id);
-    }
   };
 
   const numbersList = showAll
