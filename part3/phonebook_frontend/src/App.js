@@ -12,13 +12,12 @@ const App = () => {
   const [search, setSearch] = useState('');
   const [showAll, setShowAll] = useState(true);
   const [notification, setNotification] = useState(null);
-  const [numbersList, setNumbersList] = useState(persons);
 
   useEffect(() => {
     personService.getAll().then((initialList) => {
       setPersons(initialList);
     });
-  }, []);
+  }, [persons]);
 
   const isDuplicateName = (persons) => {
     let result = false;
@@ -79,21 +78,14 @@ const App = () => {
   const deletePerson = (id, name) => {
     if (window.confirm(`Do you really want to delete ${name}?`)) {
       personService.deleteId(id);
-      personService.getAll().then((initialList) => {
-        setPersons(initialList);
-      });
     }
   };
 
-  if (showAll) {
-    setNumbersList(persons);
-  } else {
-    setNumbersList(
-      persons.filter((person) =>
+  const numbersList = showAll
+    ? persons
+    : persons.filter((person) =>
         person.name.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }
+      );
 
   return (
     <div>
