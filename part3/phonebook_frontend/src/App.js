@@ -17,7 +17,7 @@ const App = () => {
     personService.getAll().then((initialList) => {
       setPersons(initialList);
     });
-  }, [persons]);
+  }, []);
 
   const isDuplicateName = (persons) => {
     let result = false;
