@@ -1,9 +1,24 @@
+###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "My Awesome Blog",
-  "author": "Josayko",
-  "url": "https://josayko.xyz",
-  "likes": 50
+  "title": "Test blog",
+  "author": "Unknown",
+  "url": "https://test.com",
+  "likes": 30
+}
+
+###
+DELETE http://localhost:3003/api/blogs/609a464e208758464b172929
+
+###
+PUT http://localhost:3003/api/blogs/609a49d43302334b1b68a922
+Content-Type: application/json
+
+{
+  "title": "Test blog2",
+  "author": "Unknown",
+  "url": "https://test.com",
+  "likes": 34
 }
