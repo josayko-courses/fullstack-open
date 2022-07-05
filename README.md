@@ -1,4 +1,4 @@
-# Fullstack open 2021
+# Fullstack open
 
 Modern web development course by The University of Helsinki:
 
