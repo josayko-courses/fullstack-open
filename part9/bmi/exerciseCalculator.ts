@@ -14,7 +14,7 @@ interface TrainingResults {
  * @param target average target of
  * @returns
  */
-function calculateExercises(exercices: number[], target: number) {
+export function calculateExercises(exercices: number[], target: number) {
   const totalHours = exercices.reduce(
     (previous, current) => previous + current
   );
