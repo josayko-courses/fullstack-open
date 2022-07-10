@@ -30,6 +30,7 @@ app.get('/bmi', (req, res) => {
   res.status(400).json({ error: 'malformatted parameters' });
 });
 
+/* eslint-disable */
 app.post('/exercises', (req, res) => {
   let { daily_exercises, target } = req.body;
   daily_exercises = daily_exercises.map((str: string) => {
