@@ -4,7 +4,7 @@
  * @param weight in kilograms
  * @returns a string that indicates if bmi is normal, underweight or overweight
  */
-function calculateBmi(height: number, weight: number): string {
+export function calculateBmi(height: number, weight: number) {
   if (height <= 0 || weight <= 0) {
     throw new Error('height or weight cannot be equals or less than zero');
   }
@@ -17,6 +17,7 @@ function calculateBmi(height: number, weight: number): string {
   } else if (bmi > 24.9) {
     return 'Overweight';
   }
+  return;
 }
 
 interface CalculateValues {
