@@ -7,11 +7,6 @@ const getDiagnoses = () => {
   return diagnoses;
 };
 
-const addDiagnose = () => {
-  return null;
-};
-
 export default {
-  getDiagnoses,
-  addDiagnose
+  getDiagnoses
 };
