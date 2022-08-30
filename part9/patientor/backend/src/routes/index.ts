@@ -28,9 +28,19 @@ router.get('/patients/:id', (req, res) => {
 });
 
 router.post('/patients', (req, res) => {
-  const newPatientData = toNewPatient(req.body);
-  const newPatient = patientService.addPatient(newPatientData);
-  res.json(newPatient);
+  try {
+    const newPatientData = toNewPatient(req.body);
+    if (newPatientData) {
+      const newPatient = patientService.addPatient(newPatientData);
+      res.json(newPatient);
+    }
+  } catch (e: unknown) {
+    let errorMessage = 'Something went wrong.';
+    if (e instanceof Error) {
+      errorMessage += ' Error: ' + e.message;
+    }
+    res.status(400).send(errorMessage);
+  }
 });
 
 export default router;
