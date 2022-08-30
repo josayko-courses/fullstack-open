@@ -1,5 +1,6 @@
 import patientsData from '../../data/patients.json';
-import { NonSensitivePatientData, Patient } from '../types';
+import { NewPatientData, NonSensitivePatientData, Patient } from '../types';
+import { v1 as uuid } from 'uuid';
 
 const patients: Patient[] = patientsData;
 
@@ -18,8 +19,13 @@ const findById = (id: string): Patient | undefined => {
   return patient;
 };
 
-const addPatient = () => {
-  return null;
+const addPatient = (patientData: NewPatientData) => {
+  const newPatient: Patient = {
+    id: uuid(),
+    ...patientData
+  };
+  patients.push(newPatient);
+  return newPatient;
 };
 
 export default {
