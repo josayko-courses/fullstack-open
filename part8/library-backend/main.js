@@ -1,5 +1,6 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+const { v4: uuid } = require("uuid");
 
 let authors = [
   {
@@ -112,8 +113,19 @@ const typeDefs = /* GraphQL */ `
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(name: String!): [Book!]!
+    allBooks(name: String, genre: String): [Book!]!
     allAuthors: [Author!]!
+  }
+
+  type Mutation {
+    addBook(
+      title: String!
+      author: String!
+      published: Int!
+      genres: [String!]!
+    ): Book
+
+    editAuthor(name: String!, setBornTo: Int!): Author
   }
 `;
 
@@ -121,18 +133,55 @@ const resolvers = {
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: (_, args) => {
-      if (args && args.name) {
-        return books.filter((book) => book.author === args.name);
-      } else {
+    allBooks: (_, { name, genre }) => {
+      if (!name && !genre) {
         return books;
       }
+      const results = new Set();
+      books.forEach((book) => {
+        if (!genre && name && name === book.author) {
+          results.add(book);
+        }
+        if (!name && genre && book.genres.some((el) => el === genre)) {
+          results.add(book);
+        } else if (
+          name &&
+          name === book.author &&
+          genre &&
+          book.genres.some((el) => el === genre)
+        ) {
+          results.add(book);
+        }
+      });
+      return results;
     },
     allAuthors: () => authors,
   },
   Author: {
-    bookCount: (root) =>
-      books.filter((book) => book.author === root.name).length,
+    bookCount: ({ name }) =>
+      books.filter(({ author }) => author === name).length,
+  },
+  Mutation: {
+    addBook: (_, args) => {
+      const newBook = { ...args, id: uuid() };
+      books.push(newBook);
+      if (authors.findIndex((author) => author === newBook.author) < 0) {
+        authors.push({
+          name: args.author,
+          id: uuid(),
+        });
+      }
+      return newBook;
+    },
+    editAuthor: (_, { name, setBornTo }) => {
+      const pos = authors.findIndex((el) => el.name === name);
+      if (!pos) {
+        return null;
+      }
+      const updatedAuthor = { ...authors[pos], born: setBornTo };
+      authors.splice(pos, 1, updatedAuthor);
+      return authors[pos];
+    },
   },
 };
 
